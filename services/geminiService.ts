@@ -51,10 +51,17 @@ export const generateCodingTask = async (difficulty: Difficulty, topic?: string)
     if (!text) throw new Error("No response from AI");
     
     const data = JSON.parse(text);
+    // Ensure code has proper line breaks (convert escaped newlines if any)
+    const normalizedCode = data.code
+      .replace(/\\n/g, '\n')
+      .replace(/\r\n/g, '\n')
+      .replace(/\r/g, '\n');
+
     return {
       id: Date.now().toString(),
       difficulty,
-      ...data
+      ...data,
+      code: normalizedCode
     };
   } catch (error) {
     console.error("Error generating task:", error);
