@@ -7,6 +7,7 @@ import { ViewState, Difficulty } from './types';
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>(ViewState.DASHBOARD);
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>(Difficulty.BEGINNER);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
 
   const handleStartPractice = (level: Difficulty) => {
     setSelectedDifficulty(level);
@@ -44,7 +45,12 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-screen bg-gray-950 text-white overflow-hidden font-sans">
-      <Sidebar currentView={currentView} onChangeView={setCurrentView} />
+      <Sidebar
+        currentView={currentView}
+        onChangeView={setCurrentView}
+        isCollapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
         {renderContent()}
       </main>
