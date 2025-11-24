@@ -1,0 +1,5 @@
+{
+  "name": "DeepClone AI Tutor",
+  "description": "A deep learning clone coding tutor that provides level-based code snippets for practice and AI-powered feedback.",
+  "requestFramePermissions": []
+}
