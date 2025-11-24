@@ -145,6 +145,20 @@ const PracticeArea: React.FC<PracticeAreaProps> = ({ initialDifficulty = Difficu
                 spellCheck={false}
                 className="flex-1 w-full h-full bg-transparent text-gray-200 font-mono text-sm p-4 resize-none focus:outline-none leading-6 selection:bg-indigo-500/30"
                 placeholder="# 왼쪽의 코드를 똑같이 따라 치세요..."
+                onKeyDown={(e) => {
+                  if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const target = e.target as HTMLTextAreaElement;
+                    const start = target.selectionStart;
+                    const end = target.selectionEnd;
+                    const spaces = '    '; // 4칸 스페이스 (Python 표준)
+                    setUserCode(userCode.substring(0, start) + spaces + userCode.substring(end));
+                    // 커서 위치 조정
+                    setTimeout(() => {
+                      target.selectionStart = target.selectionEnd = start + spaces.length;
+                    }, 0);
+                  }
+                }}
                 onPaste={(e) => {
                   e.preventDefault();
                   alert("클론 코딩은 직접 타이핑해야 합니다! 붙여넣기는 금지되어 있습니다.");
